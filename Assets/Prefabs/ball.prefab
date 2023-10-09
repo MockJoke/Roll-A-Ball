@@ -13,9 +13,10 @@ GameObject:
   - component: {fileID: 1958688028020675785}
   - component: {fileID: 7936987868139224462}
   - component: {fileID: 7892039602800735377}
-  - component: {fileID: 3956083222754080356}
+  - component: {fileID: 8849967644449878642}
+  - component: {fileID: 5089885675850119910}
   m_Layer: 0
-  m_Name: ball
+  m_Name: Ball
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31,7 +32,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -134,7 +135,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &3956083222754080356
+--- !u!114 &8849967644449878642
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -143,11 +144,40 @@ MonoBehaviour:
   m_GameObject: {fileID: 6098593657245672547}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9f49d078c6d5d142b3337c48c3b75aa, type: 3}
+  m_Script: {fileID: 11500000, guid: dff47a707a329584dacb1440a437085a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ball: {fileID: 7892039602800735377}
-  win: {fileID: 0}
-  GameOver: {fileID: 0}
-  ScoreBoard: {fileID: 0}
-  score: 0
+  rb: {fileID: 7892039602800735377}
+  speed: 0
+  score: {fileID: 0}
+--- !u!114 &5089885675850119910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6098593657245672547}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 5202b72fb76bc724ead7fcf9582b48b8,
+    type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Player
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
