@@ -14,8 +14,11 @@ public class PlayerController : MonoBehaviour
     private float movementY;
 
     // Speed at which the player moves.
-    [SerializeField] private float speed = 0;
+    [SerializeField] private float speed = 10f;
+    [SerializeField] private float jumpForce = 10f;
     [SerializeField] private TextMeshProUGUI score;
+
+    private bool isGrounded = true;
     
     private int coinCount = 0;
 
@@ -43,9 +46,23 @@ public class PlayerController : MonoBehaviour
     {
         // Create a 3D movement vector using the X and Y inputs.
         Vector3 movement = new Vector3 (movementX, 0.0f, movementY);
-
+        movement = Vector3.ClampMagnitude(movement, 1);
+        
         // Apply force to the Rigidbody to move the player.
         rb.AddForce(movement * speed); 
+        
+        // If we press SPACE and we are on the ground, jump.
+        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+        {
+            isGrounded = false;
+            rb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
+        }
+        
+        // If we are below the level, game over.
+        if(transform.position.y < -5)
+        {
+            gameOver();
+        }
         
         // Move();
     }
@@ -70,6 +87,15 @@ public class PlayerController : MonoBehaviour
         }
     }
     
+    void OnCollisionEnter (Collision collision)
+    {
+        // If we collided with a ground surface, we are grounded.
+        if(collision.GetContact(0).normal == Vector3.up)
+        {
+            isGrounded = true;
+        }
+    }
+    
     void OnTriggerEnter(Collider other) 
     {
         // Check if the object the player collided with has the "PickUp" tag.
@@ -83,7 +109,7 @@ public class PlayerController : MonoBehaviour
 
         if (other.gameObject.CompareTag("enemy"))
         {
-            gameManager.ToggleGameOverScreen(true);
+            gameOver();
         }
     }
 
@@ -108,6 +134,13 @@ public class PlayerController : MonoBehaviour
         score.text = $"Score: {coinCount}";
     }
 
+    private void gameOver()
+    {
+        Time.timeScale = 0f;
+        
+        gameManager.ToggleGameOverScreen(true);
+    }
+    
     private void checkWin()
     {
         if (coinCount >= gameManager.TotalCoinCount)
