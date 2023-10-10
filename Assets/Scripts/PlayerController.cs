@@ -4,6 +4,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] private GameManager gameManager;
+    
     // Rigidbody of the player.
     [SerializeField] private Rigidbody rb; 
 
@@ -44,6 +46,28 @@ public class PlayerController : MonoBehaviour
 
         // Apply force to the Rigidbody to move the player.
         rb.AddForce(movement * speed); 
+        
+        // Move();
+    }
+
+    void Move()
+    {
+        if (Input.GetKey(KeyCode.W))
+        {
+            rb.velocity += Vector3.forward * speed * Time.deltaTime;
+        }
+        if (Input.GetKey(KeyCode.S))
+        {
+            rb.velocity += Vector3.back * speed * Time.deltaTime;
+        }
+        if (Input.GetKey(KeyCode.A))
+        {
+            rb.velocity += Vector3.left * speed * Time.deltaTime;
+        }
+        if (Input.GetKey(KeyCode.D))
+        {
+            rb.velocity += Vector3.right * speed * Time.deltaTime;
+        }
     }
     
     void OnTriggerEnter(Collider other) 
@@ -55,6 +79,11 @@ public class PlayerController : MonoBehaviour
             other.gameObject.SetActive(false);
             
             addCoin();
+        }
+
+        if (other.gameObject.CompareTag("enemy"))
+        {
+            gameManager.ToggleGameOverScreen(true);
         }
     }
 
@@ -70,10 +99,20 @@ public class PlayerController : MonoBehaviour
         coinCount++;
         
         displayCoinCount();
+        
+        checkWin();
     }
     
     private void displayCoinCount()
     {
         score.text = $"Score: {coinCount}";
+    }
+
+    private void checkWin()
+    {
+        if (coinCount >= gameManager.TotalCoinCount)
+        {
+            gameManager.ToggleGameWonScreen(true);
+        }
     }
 }
