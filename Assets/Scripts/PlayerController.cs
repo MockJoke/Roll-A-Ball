@@ -16,7 +16,6 @@ public class PlayerController : MonoBehaviour
     // Speed at which the player moves.
     [SerializeField] private float speed = 10f;
     [SerializeField] private float jumpForce = 10f;
-    [SerializeField] private TextMeshProUGUI score;
 
     private bool isGrounded = true;
     
@@ -101,6 +100,8 @@ public class PlayerController : MonoBehaviour
         // Check if the object the player collided with has the "PickUp" tag.
         if (other.gameObject.CompareTag("coin")) 
         {
+            AudioManager.instance.Play(EAudioClips.CollectCoin);
+            
             // Deactivate the collided object (making it disappear).
             other.gameObject.SetActive(false);
             
@@ -117,21 +118,16 @@ public class PlayerController : MonoBehaviour
     {
         coinCount = 0;
         
-        displayCoinCount();
+        gameManager.DisplayScore(coinCount);
     }
 
     private void addCoin()
     {
         coinCount++;
         
-        displayCoinCount();
+        gameManager.DisplayScore(coinCount);
         
         checkWin();
-    }
-    
-    private void displayCoinCount()
-    {
-        score.text = $"Score: {coinCount}";
     }
 
     private void gameOver()
