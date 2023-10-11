@@ -1,10 +1,13 @@
 using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public int TotalCoinCount = 0;
+    
+    [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private GameObject gameOverScreen;
     [SerializeField] private GameObject gameWonScreen;
 
@@ -21,6 +24,11 @@ public class GameManager : MonoBehaviour
     public void ToggleGameWonScreen(bool status)
     {
         gameWonScreen.SetActive(status);    
+    }
+
+    public void DisplayScore(int score)
+    {
+        scoreText.text = $"Score: {score}";
     }
     
     public void Restart()
