@@ -4,8 +4,9 @@ public class EnemyController : MonoBehaviour
 {
     [SerializeField] private float speed = 2f;
     [SerializeField] private Vector3 moveOffset;
-    private Vector3 targetPos;
+    
     private Vector3 startPos;
+    private Vector3 targetPos;
 
     void Start()
     {
