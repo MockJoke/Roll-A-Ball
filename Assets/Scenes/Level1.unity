@@ -308,6 +308,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 277608517}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &640908163 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3077675606884858733, guid: a1dd8ba4a5e96d9478d91cad4535f04f,
+    type: 3}
+  m_PrefabInstance: {fileID: 1926699177}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2577ca3c8ec511d419896881add29636, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &702349637
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1176,6 +1188,21 @@ PrefabInstance:
       propertyPath: gameManager
       value: 
       objectReference: {fileID: 1926699178}
+    - target: {fileID: 8849967644449878642, guid: 119efe5f1ec72c048ac89801ccea3dfd,
+        type: 3}
+      propertyPath: leftJoystick
+      value: 
+      objectReference: {fileID: 1850913982}
+    - target: {fileID: 8849967644449878642, guid: 119efe5f1ec72c048ac89801ccea3dfd,
+        type: 3}
+      propertyPath: rightJoystick
+      value: 
+      objectReference: {fileID: 640908163}
+    - target: {fileID: 8849967644449878642, guid: 119efe5f1ec72c048ac89801ccea3dfd,
+        type: 3}
+      propertyPath: useButtonControls
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1334,6 +1361,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1725627394}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1850913982 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8051832142037082052, guid: a1dd8ba4a5e96d9478d91cad4535f04f,
+    type: 3}
+  m_PrefabInstance: {fileID: 1926699177}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2577ca3c8ec511d419896881add29636, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1926699177
 PrefabInstance:
   m_ObjectHideFlags: 0
