@@ -1,4 +1,3 @@
-using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -8,17 +7,21 @@ public class PlayerController : MonoBehaviour
     
     // Rigidbody of the player.
     [SerializeField] private Rigidbody rb; 
-
+    
+    // Joystick references.
+    [SerializeField] private Joystick rightJoystick;
+    [SerializeField] private Joystick leftJoystick;
     // Movement along X and Y axes.
     private float movementX;
     private float movementY;
 
     // Speed at which the player moves.
-    [SerializeField] private float speed = 10f;
+    [SerializeField] private float moveSpeed = 10f;
+    [SerializeField] private float rotationSpeed = 10f;
     [SerializeField] private float jumpForce = 10f;
 
     private bool isGrounded = true;
-    
+    [SerializeField] private bool useButtonControls = false;
     private int coinCount = 0;
 
     void Start()
@@ -26,8 +29,13 @@ public class PlayerController : MonoBehaviour
         // Get and store the Rigidbody component attached to the player.
         if (rb == null)
             rb = GetComponent<Rigidbody>();
+
+        if (gameManager == null)
+            gameManager = FindObjectOfType<GameManager>();
         
         resetCoinCount();
+
+        gameManager.ToggleInputControlsScreen(useButtonControls);
     }
  
     // This function is called when a move input is detected.
@@ -43,12 +51,29 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate() 
     {
-        // Create a 3D movement vector using the X and Y inputs.
-        Vector3 movement = new Vector3 (movementX, 0.0f, movementY);
-        movement = Vector3.ClampMagnitude(movement, 1);
+        if (useButtonControls)
+        {
+            if(rightJoystick.Vertical != 0)
+            {
+                AddForwardMovementInput();
+            }
+            if(leftJoystick.Horizontal != 0)
+            {
+                AddRotationInput();
+            }
+        }
+        else
+        {
+            // Create a 3D movement vector using the X and Y inputs.
+            Vector3 movement = new Vector3 (movementX, 0.0f, movementY);
         
-        // Apply force to the Rigidbody to move the player.
-        rb.AddForce(movement * speed); 
+            Vector3 forwardInput = rb.transform.position + movement * moveSpeed * Time.deltaTime;
+            rb.MovePosition(forwardInput);
+        
+            // Apply force to the Rigidbody to move the player.
+            // movement = Vector3.ClampMagnitude(movement, 1);
+            // rb.AddForce(movement * speed);
+        }
         
         // If we press SPACE and we are on the ground, jump.
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
@@ -65,24 +90,40 @@ public class PlayerController : MonoBehaviour
         
         // Move();
     }
+    
+    // Moves rb in forward and backward direction based on vertical input of joystick.
+    private void AddForwardMovementInput()
+    {
+        Vector3 forwardInput = rb.transform.position + rb.transform.forward * (rightJoystick.Vertical * moveSpeed * Time.deltaTime);
+
+        rb.MovePosition(forwardInput); 
+    }
+
+    // Rotates rb based on horizontal input of joystick.
+    private void AddRotationInput()
+    {
+        Quaternion desiredRotation = rb.transform.rotation * Quaternion.Euler(Vector3.up * leftJoystick.Horizontal * rotationSpeed * Time.deltaTime);
+
+        rb.MoveRotation(desiredRotation);
+    }
 
     void Move()
     {
         if (Input.GetKey(KeyCode.W))
         {
-            rb.velocity += Vector3.forward * speed * Time.deltaTime;
+            rb.velocity += Vector3.forward * rotationSpeed * Time.deltaTime;
         }
         if (Input.GetKey(KeyCode.S))
         {
-            rb.velocity += Vector3.back * speed * Time.deltaTime;
+            rb.velocity += Vector3.back * rotationSpeed * Time.deltaTime;
         }
         if (Input.GetKey(KeyCode.A))
         {
-            rb.velocity += Vector3.left * speed * Time.deltaTime;
+            rb.velocity += Vector3.left * rotationSpeed * Time.deltaTime;
         }
         if (Input.GetKey(KeyCode.D))
         {
-            rb.velocity += Vector3.right * speed * Time.deltaTime;
+            rb.velocity += Vector3.right * rotationSpeed * Time.deltaTime;
         }
     }
     

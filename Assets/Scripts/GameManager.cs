@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private GameObject gameOverScreen;
     [SerializeField] private GameObject gameWonScreen;
+    [SerializeField] private GameObject inputControlsScreen;
 
     private void Awake()
     {
@@ -25,7 +26,12 @@ public class GameManager : MonoBehaviour
     {
         gameWonScreen.SetActive(status);    
     }
-
+    
+    public void ToggleInputControlsScreen(bool status)
+    {
+        inputControlsScreen.SetActive(status);    
+    }
+    
     public void DisplayScore(int score)
     {
         scoreText.text = $"Score: {score}";
